@@ -31,21 +31,40 @@ function validate(input) {
   return true;
 }
 
-function print(){
-  alert("There are "+students.length+" students.\nThere are "+mentors.length+" mentors.");
+function print(location){
+  location.innerHTML=("There are "+students.length+" students and "+mentors.length+" mentors.<br>");
+  location.innerHTML+="<h2>Students</h2>";
   for(var i=0;i<students.length;i++){
-    alert("Student:\nName: "+students[i].name+
-        "\nPhone Number: "+students[i].phoneNumber+
-        "\nCity: "+students[i].city);
+    location.innerHTML+=printPerson(students[i]);
   }
+  location.innerHTML+="<h2>Mentors</h2>";
   for(var i=0;i<mentors.length;i++){
-    alert("Mentor:\nName: "+mentors[i].name+
-        "\nPhone Number: "+mentors[i].phoneNumber+
-        "\nCity: "+mentors[i].city);
+    location.innerHTML+=printPerson(mentors[i]);
   }
 }
-prompt("Please enter students");
+
+function printPerson(person){
+  var line = ("<br>Name: "+person.name+
+      "<br>Phone Number: "+person.phoneNumber+
+      "<br>City: "+person.city);
+  return line;
+}
+
+
+function displayMentorByCity(cityName){
+  var cityDiv=document.getElementById('city');
+  cityDiv.innerHTML="<h3>Mentors from "+cityName+"</h3>";
+  for (var i=0;i<mentors.length;i++){
+    if(mentors[i].city===cityName){
+      cityDiv.innerHTML+=printPerson(mentors[i]);
+    }
+  }
+}
+alert("Please enter students");
 fill(students);
-prompt("Please enter mentors");
+alert("Please enter mentors");
 fill(mentors);
-print();
+var resultsDiv = document.getElementById('results');
+print(resultsDiv);
+var cityName = prompt("Please enter city name");
+displayMentorByCity(cityName);
